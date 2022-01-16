@@ -1,3 +1,5 @@
+extern crate alloc;
+
 pub mod deserialize;
 pub mod instructions;
 pub mod sections;
