@@ -93,7 +93,7 @@ pub enum MemoryInstructions {
                  // Fill           = 0xfc, // memory.fill
 }
 
-/// Reference: 5.4.7 Numeric Instructions
+/// Reference: https://webassembly.github.io/spec/core/binary/instructions.html#numeric-instructions
 #[derive(Clone, Copy, Debug)]
 pub enum NumericInstructions {
     // Constant Instructions
