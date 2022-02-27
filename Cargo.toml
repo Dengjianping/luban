@@ -1,6 +1,8 @@
 [package]
 name    = "luban"
 version = "0.1.0"
+rust-version = "1.59"
 edition = "2021"
 
 [dependencies]
+thiserror = "1.0.30"
