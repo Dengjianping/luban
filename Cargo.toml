@@ -1,8 +1,15 @@
 [package]
-name    = "luban"
-version = "0.1.0"
+name         = "luban"
+authors      = ["Jamie <djptux@gmail.com>"]
+version      = "0.1.0"
 rust-version = "1.59"
-edition = "2021"
+edition      = "2021"
+description  = "A webassembly interpreter."
 
 [dependencies]
 thiserror = "1.0.30"
+
+[profile.release]
+lto           = true
+opt-level     = 3
+codegen-units = 1

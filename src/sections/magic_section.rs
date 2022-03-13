@@ -10,17 +10,19 @@ pub struct MagicSection<'a> {
 impl<'a> MagicSection<'a> {
     const LENGTH: usize = 8;
 
-    pub fn from_bytes(bytes: &'a [u8]) -> Self {
+    pub(crate) fn from_bytes(bytes: &'a [u8]) -> Self {
         Self {
             magic_number: Cow::Borrowed(&bytes[..4]),
-            version_number: Cow::Borrowed(&bytes[4..8]),
+            version_number: Cow::Borrowed(&bytes[4..Self::LENGTH]),
         }
     }
 
+    /// Get magic number
     pub fn magic_number(&self) -> &str {
         core::str::from_utf8(&self.magic_number[..4]).unwrap()
     }
 
+    /// The version of wasm
     pub fn version(&self) -> u32 {
         let mut le = [0u8; 4];
         le.copy_from_slice(&*self.version_number);

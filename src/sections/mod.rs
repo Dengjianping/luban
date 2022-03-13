@@ -20,7 +20,7 @@ pub mod types;
 pub use self::{
     code_section::*, custom_section::*, data_section::*, export_section::*, function_section::*,
     global_section::*, import_section::*, magic_section::*, memory_section::*, start_section::*,
-    table_section::*, type_section::*,
+    table_section::*, type_section::*, types::*,
 };
 
 #[derive(Clone, Debug)]
@@ -86,15 +86,5 @@ impl<'a> WasmModule<'a> {
 
     fn magic_section(bytes: &'a [u8]) -> MagicSection<'a> {
         MagicSection::from_bytes(bytes)
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn to_le() {
-        let a = 892u32;
-        dbg!(a.to_le_bytes());
-        dbg!(a.to_be_bytes());
     }
 }

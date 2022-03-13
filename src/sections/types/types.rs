@@ -13,6 +13,18 @@ pub enum NumberType {
     I32 = 0x7f,
 }
 
+impl From<u8> for NumberType {
+    fn from(ty: u8) -> Self {
+        match ty {
+            0x7c => Self::F64,
+            0x7d => Self::F32,
+            0x7e => Self::U64,
+            0x7f => Self::I32,
+            _ => panic!("Currently webassembly doesn't suppurt this type"),
+        }
+    }
+}
+
 /// Reference: https://webassembly.github.io/spec/core/syntax/types.html#vector-types
 /// https://webassembly.github.io/spec/core/binary/types.html#vector-types
 pub const VECTOR_TYPE: Byte = 0x7b; // u128, simd related
@@ -28,20 +40,14 @@ pub enum ReferenceType {
 /// https://webassembly.github.io/spec/core/binary/types.html#value-types
 #[derive(Debug, Clone, Copy)]
 pub enum ValueType {
-    NumType,
+    NumType(NumberType),
     VectorType,
-    RefType,
+    RefType(ReferenceType),
 }
 
 /// https://webassembly.github.io/spec/core/syntax/types.html#result-types
 pub type ResultType = Vec<ValueType>;
-
-/// https://webassembly.github.io/spec/core/syntax/types.html#function-types
-#[derive(Debug, Clone)]
-pub struct FunctionType {
-    pub param_types: ResultType,
-    pub return_types: ResultType,
-}
+pub type ParamsType = ResultType;
 
 /// https://webassembly.github.io/spec/core/syntax/types.html#limits
 #[derive(Debug, Clone)]
