@@ -1,3 +1,5 @@
+use crate::sections::Parse;
+
 /// Reference: https://webassembly.github.io/spec/core/binary/instructions.html#control-instructions
 #[derive(Clone, Copy, Debug)]
 pub enum ControlInstructions {
@@ -17,6 +19,7 @@ pub enum ControlInstructions {
 }
 
 /// Reference: https://webassembly.github.io/spec/core/binary/instructions.html#reference-instructions
+#[derive(Clone, Copy, Debug)]
 pub enum ReferenceInstructions {
     RefNull = 0xd0,   // ref.null
     RefIsNull = 0xd1, // ref.is_null
@@ -242,11 +245,65 @@ pub enum NumericInstructions {
 }
 
 /// Reference: https://webassembly.github.io/spec/core/binary/instructions.html#vector-instructions
+#[derive(Clone, Copy, Debug)]
 pub enum VectorInstructions {
     // Todo, this is for simd, define them in the future.
 }
 
 /// Reference: https://webassembly.github.io/spec/core/binary/instructions.html#expressions
-pub enum Expressions {
-    Expr = 0x0b, // in* end
+#[derive(Clone, Debug)]
+pub struct Expressions {
+    pub end: u8, // the end must be 0x0b
+    pub instructions: Vec<Instructions>,
+}
+
+/// https://webassembly.github.io/spec/core/binary/instructions.html#expressions
+#[derive(Clone, Debug)]
+pub enum Instructions {
+    ControlInstructions(ControlInstructions),
+    ReferenceInstructions(ReferenceInstructions),
+    ParametricInstructions(ParametricInstructions),
+    VariableInstructions(VariableInstructions),
+    TableInstructions(TableInstructions),
+    MemoryInstructions(MemoryInstructions),
+    NumericInstructions(NumericInstructions, Primitives),
+    VectorInstructions(VectorInstructions),
+}
+
+#[derive(Clone, Debug)]
+pub enum Primitives {
+    I32(i32),
+    I64(i64),
+    F32(f32),
+    F64(f64),
+}
+
+impl NumericInstructions {
+    pub fn is_i32(&self) -> bool {
+        match self {
+            NumericInstructions::I32Const => true,
+            _ => false,
+        }
+    }
+
+    pub fn is_f32(&self) -> bool {
+        match self {
+            NumericInstructions::F32Const => true,
+            _ => false,
+        }
+    }
+
+    pub fn is_i64(&self) -> bool {
+        match self {
+            NumericInstructions::I64Const => true,
+            _ => false,
+        }
+    }
+
+    pub fn is_f64(&self) -> bool {
+        match self {
+            NumericInstructions::F64Const => true,
+            _ => false,
+        }
+    }
 }

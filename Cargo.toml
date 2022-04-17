@@ -8,6 +8,7 @@ description  = "A webassembly interpreter."
 
 [dependencies]
 thiserror = "1.0.30"
+leb128 = "0.2"
 
 [profile.release]
 lto           = true

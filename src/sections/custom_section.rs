@@ -18,7 +18,3 @@ impl<'a> CustomSection<'a> {
         todo!();
     }
 }
-
-pub trait GetLocation<MultiLocation> {
-    fn is_supported_location(&self, localtion: MultiLocation) -> bool;
-}
