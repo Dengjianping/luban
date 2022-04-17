@@ -41,7 +41,7 @@ impl FunctionType {
         // returns
         let return_bytes = &bytes[1 + 1 + params_count..];
         let return_count = return_bytes[0] as usize;
-        let mut return_types = {
+        let return_types = {
             if return_count == 0 {
                 vec![]
             } else {

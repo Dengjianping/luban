@@ -1,5 +1,5 @@
 use super::*;
-use crate::utils::uleb128_decode;
+use crate::utils::unsigned_leb128_decode;
 
 /// Reference: https://webassembly.github.io/spec/core/binary/modules.html#type-section
 /// Currently, All types are function.
@@ -27,7 +27,7 @@ impl<'a> TypeSection<'a> {
         assert_eq!(_bytes[0], Self::ID);
 
         // get the length of content for type section
-        let (content_length, leb_offset) = uleb128_decode(&_bytes[1..]);
+        let (content_length, leb_offset) = unsigned_leb128_decode(&_bytes[1..]);
 
         let len = 1 + leb_offset + content_length;
         let data = Cow::Borrowed(&bytes[offset..offset + len]);

@@ -88,3 +88,9 @@ impl<'a> WasmModule<'a> {
         MagicSection::from_bytes(bytes)
     }
 }
+
+pub(crate) trait Parse<'a> {
+    type Output;
+
+    fn from_bytes(bytes: &'a [u8], offset: usize) -> Self::Output;
+}
